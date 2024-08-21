@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Loading({ children }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -46,3 +48,7 @@ export default function Loading({ children }) {
     </div>
   );
 }
+
+Loading.propTypes = {
+  children: PropTypes.node.isRequired,
+};
