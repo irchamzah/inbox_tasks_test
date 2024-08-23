@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { InboxContext } from "../../contexts/InboxContext";
 import Loading from "../Loading";
@@ -17,6 +17,8 @@ export default function MessageContainer() {
   const [loading, setLoading] = useState(false);
 
   const loggedInUserId = 2; // Diubah ke userId yang sudah login nantinya
+
+  const bottomRef = useRef(null);
 
   const fetchMessages = async (roomId) => {
     setLoading(true);
@@ -41,6 +43,12 @@ export default function MessageContainer() {
       fetchMessages(roomId);
     }
   }, [roomId]);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView();
+    }
+  }, [chats]);
 
   return (
     <>
@@ -88,6 +96,7 @@ export default function MessageContainer() {
                 className="text-primary-gray-dark"
                 lineColor="bg-primary-gray-dark"
               />
+
               <Message
                 textColor={"#E5A443"}
                 chatColor={"#FCEED3"}
@@ -115,11 +124,13 @@ export default function MessageContainer() {
                 message="Sure thing. Claren"
                 time="11:30"
               />
+
               <MessageDateGap
                 date="New Message"
                 textColor="text-indicator-red"
                 lineColor="bg-indicator-red"
               />
+              <div ref={bottomRef}></div>
               <Message
                 textColor={"#43B78D"}
                 chatColor={"#D2F2EA"}
