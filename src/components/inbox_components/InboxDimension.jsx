@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Dimension from "../dimensions/Dimension";
 import Search from "../Search";
 import Loading from "../Loading";
@@ -7,54 +7,80 @@ import GroupChatIcons from "./GroupChatIcons";
 import ChatIcon from "./ChatIcon";
 import PropTypes from "prop-types";
 import HorizontalLine from "./HorizontalLine";
-import WhitePadding from "./WhitePadding";
+import { QuickContext } from "../../contexts/QuickContext";
+import { InboxProvider } from "../../contexts/InboxContext";
+import {
+  formatDateToDayMonthYearHoursMinutes,
+  getFirstLetter,
+} from "../../utils/utils";
 
-export default function InboxDimension({
-  loading,
-  getDate,
-  messages,
-  getFirstWord,
-}) {
+export default function InboxDimension() {
+  const { loading, chatRooms } = useContext(QuickContext);
+
   return (
     <div className="absolute  bottom-20 right-0 m-10 overflow-hidden">
-      <Dimension>
-        <Search />
-        {loading ? (
-          <Loading>Loading Chats...</Loading>
-        ) : (
-          <div className="overflow-y-auto flex flex-col flex-grow">
-            <WhitePadding />
-            <ChatContainer
-              icon={<GroupChatIcons />}
-              title="Group Chats"
-              date={getDate()}
-              sender="Emely"
-              message="Hello there, how can I help you?"
-              isUnread={false}
-            />
-            <HorizontalLine />
-            {messages.map((message, index) => (
-              <React.Fragment key={index}>
-                <ChatContainer
-                  icon={<ChatIcon firstWord={getFirstWord(message.name)} />}
-                  title={message.name}
-                  date={getDate()}
-                  message={message.body}
-                  isUnread={true}
-                />
-                {index !== messages.length - 1 && <HorizontalLine />}
-              </React.Fragment>
-            ))}
+      <InboxProvider>
+        <Dimension>
+          <div className="mb-6">
+            <Search />
           </div>
-        )}
-      </Dimension>
+          {loading ? (
+            <Loading>Loading Chats...</Loading>
+          ) : (
+            <>
+              <div className="overflow-y-auto flex flex-col flex-grow">
+                {chatRooms.map((chatRoom, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <ChatContainer
+                        roomId={chatRoom.id}
+                        icon={
+                          chatRoom.isGroupChat ? (
+                            <GroupChatIcons />
+                          ) : (
+                            <ChatIcon
+                              firstWord={getFirstLetter(
+                                chatRoom.messages.slice(-1)[0].name
+                              )}
+                            />
+                          )
+                        }
+                        title={
+                          chatRoom.isGroupChat
+                            ? chatRoom.title
+                            : chatRoom.messages.slice(-1)[0].name
+                        }
+                        date={formatDateToDayMonthYearHoursMinutes(
+                          chatRoom.createdAt
+                        )}
+                        sender={
+                          chatRoom.isGroupChat
+                            ? chatRoom.messages.slice(-1)[0].name
+                            : ""
+                        }
+                        message={chatRoom.messages.slice(-1)[0].body}
+                        isUnread={chatRoom.isUnread}
+                      />
+                      {index !== chatRooms.length - 1 && (
+                        <HorizontalLine
+                          className={"bg-primary-gray-light my-[22px]"}
+                        />
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </Dimension>
+      </InboxProvider>
     </div>
   );
 }
 
 InboxDimension.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  getDate: PropTypes.func.isRequired,
-  messages: PropTypes.array.isRequired,
-  getFirstWord: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  getDate: PropTypes.func,
+  chatRooms: PropTypes.array,
+  getFirstWord: PropTypes.func,
 };

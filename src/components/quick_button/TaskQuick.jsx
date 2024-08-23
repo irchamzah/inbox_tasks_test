@@ -1,14 +1,12 @@
-import React from "react";
 import CloseQuickButton from "./CloseQuickButton";
 import TaskQuickButton from "./TaskQuickButton";
+import { QuickContext } from "../../contexts/QuickContext";
+import { useContext } from "react";
 
-export default function TaskQuick({
-  isTaskOpen,
-  isInboxOpen,
-  isCloseShow,
-  closeAll,
-  toggleTask,
-}) {
+export default function TaskQuick() {
+  const { isTaskOpen, isInboxOpen, isCloseShow, closeAll, toggleTask } =
+    useContext(QuickContext);
+
   return (
     <div
       className={`relative inline-block ${isTaskOpen ? "order-1" : "order-2"}`}

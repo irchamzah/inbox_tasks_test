@@ -18,7 +18,7 @@ export default {
         "chats-orange": "#E5A443",
         "chats-orange-light": "#FCEED3",
         "chats-purple": "#9B51E0",
-        "chats-purple-light": "#EEFCFF",
+        "chats-purple-light": "#EEDCFF",
         "chats-green": "#43B78D",
         "chats-green-light": "#D2F2EA",
         "stikers-white": "#E9F3FF",

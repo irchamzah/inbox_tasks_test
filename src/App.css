@@ -9,14 +9,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fff;
+  background-color: #e6e6e6;
   border-radius: 10px;
   border: 2px solid #fff;
   transition: background-color 0.3s ease; /* Transisi warna saat hover */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #e6e6e6;
+  background-color: #e0e0e0;
 }
 
 /* Scrollbar will be hidden by default */

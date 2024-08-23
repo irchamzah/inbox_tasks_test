@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext } from "react";
 import GroupChat from "./GroupChat";
+import { InboxContext } from "../../contexts/InboxContext";
 
 export default function ChatContainer({
+  roomId,
   icon,
   title,
   date,
@@ -10,16 +12,17 @@ export default function ChatContainer({
   message,
   isUnread,
 }) {
-  const [isShowGroupChat, setIsShowGroupChat] = useState(false);
-  function handleClick() {
-    setIsShowGroupChat(true);
-  }
+  const { isShowChat, showDetailChat } = useContext(InboxContext);
+
+  const handleClick = () => {
+    showDetailChat(roomId);
+  };
 
   return (
     <>
-      {isShowGroupChat && <GroupChat />}
+      {isShowChat && <GroupChat />}
 
-      <div className="w-full py-[22px] flex">
+      <div className="w-full flex">
         <div
           className="mr-4 flex items-center justify-center min-w-[70px] hover:opacity-90 cursor-pointer capitalize"
           onClick={handleClick}
@@ -48,11 +51,13 @@ export default function ChatContainer({
           >
             <div className="leading-4 mt-2 text-[14px] max-w-[500px]">
               {sender && (
-                <p className="font-bold text-primary-gray-dark">{sender} :</p>
+                <p className="font-bold text-primary-gray-dark capitalize">
+                  {sender} :
+                </p>
               )}
               <p className="text-primary-gray-dark truncate">{message}</p>
             </div>
-            {isUnread && (
+            {isUnread === 1 && (
               <div className="bg-indicator-red w-3 h-3 rounded-full"></div>
             )}
           </div>
@@ -63,10 +68,11 @@ export default function ChatContainer({
 }
 
 ChatContainer.propTypes = {
+  roomId: PropTypes.number.isRequired,
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   sender: PropTypes.string,
   message: PropTypes.string.isRequired,
-  isUnread: PropTypes.bool,
+  isUnread: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };

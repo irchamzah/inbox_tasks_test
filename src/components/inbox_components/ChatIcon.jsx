@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 export default function ChatIcon({ firstWord }) {
   return (
     <div className="flex">
@@ -7,3 +8,7 @@ export default function ChatIcon({ firstWord }) {
     </div>
   );
 }
+
+ChatIcon.propTypes = {
+  firstWord: PropTypes.string.isRequired,
+};

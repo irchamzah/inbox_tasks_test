@@ -1,10 +1,12 @@
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { QuickContext } from "../../contexts/QuickContext";
 
-const MainQuickButton = ({ onClick }) => {
+const MainQuickButton = () => {
+  const { toggleMain } = useContext(QuickContext);
   return (
     <>
       <button
-        onClick={onClick}
+        onClick={toggleMain}
         className={`cursor-pointer hover:opacity-90 active:opacity-80 rounded-full h-[60px] w-[60px] flex items-center justify-center bg-primary-blue`}
       >
         <svg
@@ -25,10 +27,6 @@ const MainQuickButton = ({ onClick }) => {
       </button>
     </>
   );
-};
-
-MainQuickButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
 };
 
 export default MainQuickButton;

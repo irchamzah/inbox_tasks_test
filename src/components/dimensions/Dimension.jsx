@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 export default function Dimension({ children }) {
   return (
     <>
@@ -7,3 +8,7 @@ export default function Dimension({ children }) {
     </>
   );
 }
+
+Dimension.propTypes = {
+  children: PropTypes.node.isRequired,
+};

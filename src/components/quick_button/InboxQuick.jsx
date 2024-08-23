@@ -1,14 +1,11 @@
-import React from "react";
 import CloseQuickButton from "./CloseQuickButton";
 import InboxQuickButton from "./InboxQuickButton";
+import { QuickContext } from "../../contexts/QuickContext";
+import { useContext } from "react";
 
-export default function InboxQuick({
-  isInboxOpen,
-  isTaskOpen,
-  isCloseShow,
-  closeAll,
-  toggleInbox,
-}) {
+export default function InboxQuick() {
+  const { isInboxOpen, isTaskOpen, isCloseShow, closeAll, toggleInbox } =
+    useContext(QuickContext);
   return (
     <div
       className={`relative inline-block ${
