@@ -63,7 +63,7 @@ export default function InboxDimension() {
                       />
                       {index !== chatRooms.length - 1 && (
                         <HorizontalLine
-                          className={"bg-primary-gray-light my-[22px]"}
+                          className={"bg-primary-gray-light my-[22px] w-full"}
                         />
                       )}
                     </React.Fragment>

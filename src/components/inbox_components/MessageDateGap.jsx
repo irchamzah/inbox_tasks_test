@@ -9,9 +9,9 @@ export default function MessageDateGap({ date, textColor, lineColor }) {
         date === "New Message" ? "sticky bottom-0" : ""
       }`}
     >
-      <HorizontalLine className={lineColor} />
-      <p className={`text-nowrap w-min mx-6 font-bold`}>{date}</p>
-      <HorizontalLine className={lineColor} />
+      <HorizontalLine className={`w-full ${lineColor}`} />
+      <p className={`text-nowrap mx-6 font-bold`}>{date}</p>
+      <HorizontalLine className={`w-full ${lineColor}`} />
     </div>
   );
 }
